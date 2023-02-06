@@ -6,7 +6,14 @@ response = requests.get('https://news.ycombinator.com/news')
 yc_web_page = response.text
 
 soup = BeautifulSoup(yc_web_page, 'html.parser')
-print(soup.title)
+articles = soup.select(".titleline a")
+article_texts = [article.getText() for article in articles]
+article_links = [article.get('href') for article in articles]
+print(article_links)
+article_upvotes = soup.find_all(name='span', class_="score")
+article_upvotes = [article.getText() for article in article_upvotes]
+print(article_upvotes)
+
 
 
 # with open('./website.html', 'r') as html_file:
